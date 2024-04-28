@@ -1,0 +1,23 @@
+[
+    {
+        "name": "UniVerse",
+        "logs": [
+            { "name": "errlog", "path": "/usr/uv/errlog" }
+        ]
+    }, 
+    {
+        "name": "Application",
+        "logs" :[
+            { "name": "maillog", "path": "/var/log/maillog" },
+            { "name": "nginx-access", "path": "/var/log/nginx/access.log" },
+            { "name": "nginx-error", "path": "/var/log/nginx/error.log" }
+        ]
+    }, 
+    {
+        "name": "System",
+        "logs": [
+            { "name": "dmesg", "path": "/var/log/dmesg" },
+            { "name": "messages", "path": "/var/log/messages" }
+        ]
+    }
+]

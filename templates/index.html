@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Log Viewer</title>
+        <link rel="icon" href="data:;base64,=">
+        <script
+            src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <div class="flex gap-2">
+            {{ range .List }}
+            <div>
+                <h4>{{ .Name }}</h4>
+                <ol>
+                    {{ range .Logs }}
+                    <li>
+                        <a href="/?log={{ .Name }}">{{ .Name }}</a>
+                    </li>
+                    {{ end }}
+                </ol>
+            </div>
+            {{ end }}
+            </aside>
+        </div>
+
+        <main class="gap-2">
+            <h2>{{ .Log.Name }} - {{ len .Log.Lines }} Lines</h2>
+
+            <div>
+                <input class="search" type="text" id="search-1">
+                <input class="search" type="text" id="search-2">
+                <input class="search" type="text" id="search-3">
+                <input class="search" type="text" id="search-4">
+            </div>
+
+            <table id="log-table">
+                <thead>
+                    <th>Line</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {{ range $index, $elem := .Log.Lines }}
+                    <tr>
+                        <td style="text-align: right"> {{$index }}</td>
+                        <td>{{ $elem }}</td>
+                    </tr>
+                    {{ end }}
+                </tbody>
+            </table>
+        </main>
+
+        <script>
+            $(document).ready(function() {
+                $(".search").on("keyup", function () {
+                    var v1 = $("#search-1").val().toLowerCase();
+                    var v2 = $("#search-2").val().toLowerCase();
+                    var v3 = $("#search-3").val().toLowerCase();
+                    var v4 = $("#search-4").val().toLowerCase();
+
+                    let x = $("#log-table tr").filter(function () {
+                        return $(this).text().toLowerCase().indexOf(v1) > -1
+                    });
+
+                    x = x.filter(function () {
+                        return $(this).text().toLowerCase().indexOf(v2) > -1
+                    });
+
+                    x = x.filter(function () {
+                        return $(this).text().toLowerCase().indexOf(v3) > -1
+                    });
+
+                    x = x.filter(function () {
+                        return $(this).text().toLowerCase().indexOf(v4) > -1
+                    });
+
+                    $("#log-table tr").hide();
+
+                    x.each(function() {
+                        $(this).show();
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
+
+<style>
+.flex { display: flex; }
+.flex-1 { flex: 1; }
+.gap-2 { gap: 0.5rem; }
+table, tr, td, th {
+    font-family: Menlo, Consolas, Monaco, Liberation Mono, Lucida Console, monospace;
+    font-size: 16px;
+    border-collapse: collapse;
+}
+td { padding: 5px; }
+td { border: 1px solid black; }
+</style>
